@@ -4,14 +4,16 @@
     <title>Image details.</title>
   </head>
   <body>
-    <div style="text-align: center; margin-top: 20px;">
+    <div style="text-align: center; margin-top: 20px;" id="init">
       <label for="image">upload image here.</label>
       <div>
         <input type="file" id="image" />
       </div>
     </div>
-    <div id="detail" style="width: 60%; margin: 20px auto; text-align: left;"></div>
-    <canvas id="preview"></canvas>
+    <div style="display: flex; margin-top: 20px;">
+      <div id="detail" style="width: 20%;"></div>
+      <canvas id="preview"></canvas>
+    </div>
     <script src="./index.js"></script>
   </body>
 </html>
