@@ -5,6 +5,7 @@ const imageForm = document.getElementById("image");
 const detailArea = document.getElementById("detail");
 const previewBoard = document.getElementById("preview");
 const previewContext = previewBoard.getContext("2d");
+const alpha = document.getElementById("alpha");
 var offsetX = null;
 var offsetY = null;
 var imageData = null;
@@ -17,6 +18,7 @@ var isShow = false;
 // events.
 imageForm.onchange = getDetail;
 previewBoard.onmousemove = getCurrentInfo;
+alpha.onchange = changeAlpha;
 
 /**
  * on change event.
@@ -130,4 +132,13 @@ function getCurrentInfo(e) {
   //   console.log(`x : ${mouseX}, y : ${mouseY}`);
   //   console.log(imageData);
   // }
+}
+
+/**
+ * change alpha.
+ * TODO: not working.
+ */
+function changeAlpha () {
+  const alp = this.value / 100;
+  previewContext.globalAlpha = alp;
 }
