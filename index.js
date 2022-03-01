@@ -7,6 +7,7 @@ const previewBoard = document.getElementById("preview");
 const previewContext = previewBoard.getContext("2d");
 const alpha = document.getElementById("alpha");
 const rotateButton = document.getElementById("rotate");
+const zoom = document.getElementById("zoom");
 var offsetX = null;
 var offsetY = null;
 var imageData = null;
@@ -20,6 +21,7 @@ imageForm.onchange = getDetail;
 previewBoard.onmousemove = getCurrentInfo;
 alpha.onchange = changeAlpha;
 rotateButton.onclick = changeRotate;
+zoom.onchange = changeZoom;
 
 /**
  * on change event.(init)
@@ -174,4 +176,15 @@ function reloadCanvas() {
   if (imgRaw !== null) {
     previewContext.drawImage(imgRaw, 0, 0);
   }
+}
+
+/**
+ * change zoom.
+ */
+function changeZoom() {
+  const maxZoom = 2;
+  const zoomScale = (this.value / 100) * maxZoom;
+  clearCanvas();
+  previewContext.scale(zoomScale, zoomScale);
+  reloadCanvas();
 }
