@@ -6,19 +6,18 @@ const detailArea = document.getElementById("detail");
 const previewBoard = document.getElementById("preview");
 const previewContext = previewBoard.getContext("2d");
 const alpha = document.getElementById("alpha");
+const rotateButton = document.getElementById("rotate");
 var offsetX = null;
 var offsetY = null;
 var imageData = null;
-const COLORS = [
-  "R", "G", "B", "A"
-];
+const COLORS = ["R", "G", "B", "A"];
 var isShow = false;
-
 
 // events.
 imageForm.onchange = getDetail;
 previewBoard.onmousemove = getCurrentInfo;
 alpha.onchange = changeAlpha;
+rotateButton.onclick = changeRotate;
 
 /**
  * on change event.
@@ -119,13 +118,13 @@ function getImageArray() {
 function getCurrentInfo(e) {
   e.preventDefault();
   if (isShow) {
-    const data = previewContext.getImageData(e.offsetX,e.offsetY,1,1).data;
-    document.getElementById('R').textContent = data[0];
-    document.getElementById('G').textContent = data[1];
-    document.getElementById('B').textContent = data[2];
-    document.getElementById('A').textContent = data[3];
+    const data = previewContext.getImageData(e.offsetX, e.offsetY, 1, 1).data;
+    document.getElementById("R").textContent = data[0];
+    document.getElementById("G").textContent = data[1];
+    document.getElementById("B").textContent = data[2];
+    document.getElementById("A").textContent = data[3];
   }
-  
+
   // if (imageData !== null) {
   //   let mouseX = parseInt(e.clientX - offsetX);
   //   let mouseY = parseInt(e.clientY - offsetY);
@@ -138,7 +137,15 @@ function getCurrentInfo(e) {
  * change alpha.
  * TODO: not working.
  */
-function changeAlpha () {
+function changeAlpha() {
   const alp = this.value / 100;
   previewContext.globalAlpha = alp;
+}
+
+/**
+ * change rotate.
+ * TODO: not working.
+ */
+function changeRotate() {
+  previewContext.rotate((45 * Math.PI) / 180);
 }
