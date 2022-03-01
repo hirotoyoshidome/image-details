@@ -13,6 +13,8 @@ var imageData = null;
 const COLORS = ["R", "G", "B", "A"];
 var isShow = false;
 
+let imgRaw = null;
+
 // events.
 imageForm.onchange = getDetail;
 previewBoard.onmousemove = getCurrentInfo;
@@ -20,7 +22,7 @@ alpha.onchange = changeAlpha;
 rotateButton.onclick = changeRotate;
 
 /**
- * on change event.
+ * on change event.(init)
  */
 function getDetail(e) {
   const file = e.target.files[0];
@@ -51,6 +53,7 @@ function showPreview(f) {
     img.onload = function () {
       previewBoard.width = img.width;
       previewBoard.height = img.height;
+      imgRaw = img;
       previewContext.drawImage(img, 0, 0);
       // image info.
       createPTag("IMAGE WIDTH", img.width);
@@ -135,17 +138,40 @@ function getCurrentInfo(e) {
 
 /**
  * change alpha.
- * TODO: not working.
  */
 function changeAlpha() {
+  clearCanvas();
   const alp = this.value / 100;
   previewContext.globalAlpha = alp;
+  reloadCanvas();
 }
 
 /**
  * change rotate.
- * TODO: not working.
  */
 function changeRotate() {
-  previewContext.rotate((45 * Math.PI) / 180);
+  clearCanvas();
+  previewContext.translate(previewBoard.width / 2, previewBoard.height / 2);
+  previewContext.rotate((90 * Math.PI) / 180);
+  previewContext.translate(
+    (-1 * previewBoard.width) / 2,
+    (-1 * previewBoard.height) / 2
+  );
+  reloadCanvas();
+}
+
+/**
+ * clear.
+ */
+function clearCanvas() {
+  previewContext.clearRect(0, 0, previewBoard.width, previewBoard.height);
+}
+
+/**
+ * reload.
+ */
+function reloadCanvas() {
+  if (imgRaw !== null) {
+    previewContext.drawImage(imgRaw, 0, 0);
+  }
 }
