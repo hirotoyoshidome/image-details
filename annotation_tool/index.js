@@ -7,6 +7,7 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const img = document.getElementById('img');
 const btn = document.getElementById('upload');
+const icon = document.getElementById('icon');
 
 // variables.
 let isDrag = false;
@@ -211,13 +212,18 @@ function putIconArea(sx, sy, ex, ey) {
   const x = (sx + ex) / 2;
   const y = (sy + ey) / 2;
 
-  // TODO change image.
-  const icon = document.createElement('canvas');
-  const iconCtx = icon.getContext('2d');
-  iconCtx.fillStyle = 'yellow';
-  iconCtx.fillRect(0,0,64,32);
+  // const icon = document.createElement('canvas');
+  // const iconCtx = icon.getContext('2d');
+  // iconCtx.fillStyle = 'yellow';
+  // iconCtx.fillRect(0,0,64,32);
+  // ctx.drawImage(icon, x,y,32,32);
 
-  ctx.drawImage(icon, x,y,32,32);
+  const iconImg = new Image();
+  iconImg.src = icon.src;
+  iconImg.width = 16;
+  iconImg.height = 16;
+
+  ctx.drawImage(iconImg, x,y);
 }
 
 // event binds.
