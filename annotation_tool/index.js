@@ -58,8 +58,7 @@ function _up(e) {
   endY = e.offsetY;
   isDrag = false;
   if (confirm('Already Done??\nYes->OK | No->Cancel')) {
-    // annotateImage(startX, startY, endX, endY);
-    downloadCanvasAsImage();
+    annotateImage(startX, startY, endX, endY);
   } else {
     clearCanvas();
   }
@@ -171,13 +170,54 @@ function uploadImage() {
 }
 
 /**
- * TODO 未実装。画像の埋め込みをしたい
+ * fill area and put icon.
  */
 function annotateImage(sx, sy, ex, ey) {
-  console.log(sx);
-  console.log(sy);
-  console.log(ex);
-  console.log(ey);
+  const area = getArea(sx, sy, ex, ey);
+  fillArea(area);
+  putIconArea(sx, sy, ex, ey);
+
+  // download layer canvas.
+  if (confirm('Download?')) {
+    downloadCanvasAsImage();
+  }
+}
+
+/**
+ * get area from selected points.
+ */
+function getArea(sx, sy, ex, ey) {
+  let area = new Path2D();
+  area.moveTo(sx, sy);
+  area.lineTo(sx,ey);
+  area.lineTo(ex,ey);
+  area.lineTo(ex,sy);
+  area.closePath();
+  return area;
+}
+
+/**
+ * fill selected area.
+ */
+function fillArea(area) {
+  ctx.fillStyle = 'green';
+  ctx.fill(area, 'evenodd');
+}
+
+/**
+ * put icon at center of selected area.
+ */
+function putIconArea(sx, sy, ex, ey) {
+  const x = (sx + ex) / 2;
+  const y = (sy + ey) / 2;
+
+  // TODO change image.
+  const icon = document.createElement('canvas');
+  const iconCtx = icon.getContext('2d');
+  iconCtx.fillStyle = 'yellow';
+  iconCtx.fillRect(0,0,64,32);
+
+  ctx.drawImage(icon, x,y,32,32);
 }
 
 // event binds.
